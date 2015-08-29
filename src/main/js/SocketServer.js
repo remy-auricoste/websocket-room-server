@@ -1,11 +1,10 @@
 var ws = require("nodejs-websocket");
 var Random = require("./Random");
 var Room = require("./Room");
+var Client = require("./Client");
 var Meta = require("rauricoste-meta");
 
 var clients = {};
-
-
 var findId = function() {
     var id = Random.nextReadableId();
     return clients[id] ? findId() : id;
@@ -13,11 +12,12 @@ var findId = function() {
 
 var SocketServer = function(port) {
     return ws.createServer(function (conn) {
-        var send = function(obj, destConn) {
-            if (!destConn) {
-                destConn = conn;
+        var client = new Client(conn);
+        var send = function(obj, destClient) {
+            if (!destClient) {
+                destClient = client;
             }
-            destConn.sendText(JSON.stringify(obj));
+            client.send(obj);
         };
         var error = function(originalMessage, errorMessage) {
             send({
@@ -28,9 +28,9 @@ var SocketServer = function(port) {
         }
 
         var id = findId();
-        conn.id = id;
-        clients[id] = conn;
-        console.log("New connection", conn.id);
+        client.id = id;
+        clients[id] = client;
+        console.log("New connection", id);
         send({
             id: id,
             dest: id,
@@ -68,11 +68,12 @@ var SocketServer = function(port) {
                 return;
             }
             send(message, destClient);
-        })
+        });
         conn.on("close", function (code, reason) {
             console.log("Connection closed "+conn.id);
+            client.close();
             delete clients[conn.id];
-        })
+        });
     }).listen(port);
 };
 
