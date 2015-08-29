@@ -1,0 +1,15 @@
+{
+  "name": "node-project-starter",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/main/js/Adder.js",
+  "scripts": {
+    "test": "node commands.js test"
+  },
+  "author": "remy.auricoste@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "q": "^1.4.1",
+    "rauricoste-node-tests": "x"
+  }
+}
