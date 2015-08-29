@@ -47,9 +47,9 @@ var SocketServer = function(port) {
                 switch(message.server) {
                     case "JOIN":
                         var roomName = message.args[0];
-                        console.log(conn.id+" joined room "+roomName);
+                        console.log(client.id+" joined room "+roomName);
                         var room = Room.getRoom(roomName);
-                        room.join(conn);
+                        room.join(client);
                         send({
                             server: "JOIN",
                             room: roomName,
@@ -70,9 +70,9 @@ var SocketServer = function(port) {
             send(message, destClient);
         });
         conn.on("close", function (code, reason) {
-            console.log("Connection closed "+conn.id);
+            console.log("Connection closed "+client.id);
             client.close();
-            delete clients[conn.id];
+            delete clients[client.id];
         });
     }).listen(port);
 };
