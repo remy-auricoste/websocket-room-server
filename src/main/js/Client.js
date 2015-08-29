@@ -3,7 +3,7 @@ var Client = function(conn) {
     this.rooms = {};
 }
 Client.prototype.send = function(object) {
-    this.conn.sendText(JSON.stringify(obj));
+    this.conn.sendText(JSON.stringify(object));
 }
 Client.prototype.close = function() {
     for (var key in this.rooms) {
