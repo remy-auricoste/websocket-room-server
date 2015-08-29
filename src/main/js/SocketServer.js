@@ -1,6 +1,7 @@
 var ws = require("nodejs-websocket");
 var Random = require("./Random");
 var Room = require("./Room");
+var Meta = require("rauricoste-meta");
 
 var clients = {};
 
@@ -47,10 +48,14 @@ var SocketServer = function(port) {
                     case "JOIN":
                         var roomName = message.args[0];
                         console.log(conn.id+" joined room "+roomName);
-                        Room.getRoom(roomName).join(conn);
+                        var room = Room.getRoom(roomName);
+                        room.join(conn);
                         send({
                             server: "JOIN",
-                            room: roomName
+                            room: roomName,
+                            members: Meta.map(room.clients, function(client) {
+                                return client.id;
+                            })
                         });
                         break;
                     error(message, "unknow command "+message.server);
