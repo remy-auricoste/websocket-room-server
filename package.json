@@ -1,8 +1,8 @@
 {
-  "name": "node-project-starter",
+  "name": "rauricoste-websocket-room-server",
   "version": "0.0.1",
   "description": "",
-  "main": "src/main/js/Adder.js",
+  "main": "src/main/js/SocketServer.js",
   "scripts": {
     "test": "node commands.js test"
   },
@@ -11,5 +11,8 @@
   "devDependencies": {
     "q": "^1.4.1",
     "rauricoste-node-tests": "x"
+  },
+  "dependencies": {
+    "nodejs-websocket": "^1.3.0"
   }
 }
