@@ -10,7 +10,7 @@ Room.prototype.join = function(client) {
 }
 Room.prototype.leave = function(client) {
     delete this.clients[client.id];
-    if (!this.clients.length) {
+    if (this.isEmpty()) {
         delete Room.all[this.name];
     }
     delete client.rooms[this.name];
@@ -20,6 +20,12 @@ Room.prototype.send = function(message) {
         var client = this.clients[key];
         client.send(message);
     }
+}
+Room.prototype.isEmpty = function() {
+    for (var key in this.clients) {
+        return false;
+    }
+    return true;
 }
 
 Room.getRoom = function(name) {
