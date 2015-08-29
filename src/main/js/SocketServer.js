@@ -62,6 +62,10 @@ var SocketServer = function(port) {
                 }
                 return;
             }
+            if (message.room) {
+                Room.getRoom(message.room).send(message);
+                return;
+            }
             var destClient = clients[message.dest];
             if (!destClient) {
                 error(message, "unknown client with id "+message.dest);
