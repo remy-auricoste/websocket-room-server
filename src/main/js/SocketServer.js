@@ -58,7 +58,7 @@ var SocketServer = function(port) {
                             })
                         });
                         break;
-                    error(message, "unknow command "+message.server);
+                    error(message, "unknown command "+message.server);
                 }
                 return;
             }
@@ -77,6 +77,10 @@ var SocketServer = function(port) {
             console.log("Connection closed "+client.id);
             client.close();
             delete clients[client.id];
+        });
+        conn.on("error", function(err) {
+            console.error("error");
+            console.error(err);
         });
     }).listen(port);
 };
