@@ -18,7 +18,7 @@ var SocketServer = function(port) {
             if (!destClient) {
                 destClient = client;
             }
-            client.send(obj);
+            destClient.send(obj);
         };
         var error = function(originalMessage, errorMessage) {
             send({
