@@ -11,6 +11,7 @@ var findId = function() {
 }
 
 var SocketServer = function(port) {
+    console.log("starting ws server on port "+port);
     return ws.createServer(function (conn) {
         var client = new Client(conn);
         var send = function(obj, destClient) {
