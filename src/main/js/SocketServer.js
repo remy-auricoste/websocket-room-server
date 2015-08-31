@@ -4,6 +4,14 @@ var Room = require("./Room");
 var Client = require("./Client");
 var Meta = require("rauricoste-meta");
 
+var toArray = function(object) {
+    var result = [];
+    for (var key in object) {
+        result.push(key);
+    }
+    return result;
+}
+
 var clients = {};
 var findId = function() {
     var id = Random.nextReadableId();
@@ -54,9 +62,7 @@ var SocketServer = function(port) {
                         send({
                             server: "JOIN",
                             room: roomName,
-                            members: Meta.map(room.clients, function(client) {
-                                return client.id;
-                            })
+                            members: toArray(room.clients)
                         });
                         break;
                     error(message, "unknown command "+message.server);
