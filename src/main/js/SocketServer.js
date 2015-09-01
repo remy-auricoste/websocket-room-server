@@ -65,6 +65,12 @@ var SocketServer = function(port) {
                             members: toArray(room.clients)
                         });
                         break;
+                    case "LEAVE":
+                        var roomName = message.args[0];
+                        console.log(client.id+" joined room "+roomName);
+                        var room = Room.getRoom(roomName);
+                        room.leave(client);
+                        break;
                     error(message, "unknown command "+message.server);
                 }
                 return;
