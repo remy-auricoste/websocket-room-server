@@ -36,7 +36,7 @@ var XhrServer = function(port) {
         var answer = function(str) {
             response.writeHead(200, {
                 'Content-Type': 'text/plain',
-                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': request.headers.origin
             });
             response.end(typeof str === "object" ? JSON.stringify(str) : str);
         }
@@ -67,8 +67,10 @@ var XhrServer = function(port) {
                     answer({messages: messages});
                 } else if (request.method === "POST") {
                     conn.ontext(body);
+                    answer({});
                 } else if (request.method === "DELETE") {
                     closeConn(conn);
+                    answer({});
                 }
             } else {
                 response.writeHead(404, {'Content-Type': 'text/plain'});
