@@ -1,7 +1,5 @@
-var SocketServer = require("./src/main/js/SocketServer");
-var XhrServer = require("./src/main/js/XhrServer");
+var main = require("./src/main/js/main");
 
 var port = process.env.PORT || 8001;
 
-new SocketServer(port);
-new XhrServer(8002);
+new main.SocketServer(port);
