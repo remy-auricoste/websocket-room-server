@@ -67,7 +67,8 @@ module.exports = function(conn) {
                     var room = Room.getRoom(roomName);
                     room.leave(client);
                     break;
-                error(message, "unknown command "+message.server);
+                default:
+                    error(message, "unknown command "+message.server);
             }
             return;
         }
