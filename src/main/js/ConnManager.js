@@ -67,6 +67,8 @@ module.exports = function(conn) {
                     var room = Room.getRoom(roomName);
                     room.leave(client);
                     break;
+                case "PING":
+                    break;
                 default:
                     error(message, "unknown command "+message.server);
             }
