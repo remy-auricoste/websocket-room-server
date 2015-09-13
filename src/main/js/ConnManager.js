@@ -1,4 +1,4 @@
-var Random = require("./Random");
+var Random = require("rauricoste-random");
 var Client = require("./Client");
 var Room = require("./Room");
 
