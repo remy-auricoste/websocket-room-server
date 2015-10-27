@@ -9,6 +9,17 @@ var ttls = {};
 
 var ttl = 20 * 1000;
 
+var createConn = function() {
+    var conn = new XhrConn();
+    ConnManager(conn);
+    var idMessage = JSON.parse(conn.getMessages()[0]);
+    id = idMessage.id;
+    conn.id = id;
+    conns[id] = conn;
+    ttls[id] = new Date().getTime() + ttl;
+    return conn;
+}
+
 var closeConn = function(conn) {
     if (!conn) {
         return;
@@ -47,20 +58,16 @@ var XhrServer = function(port) {
 
         request.addListener('end', function () {
             if (path === "/socket") {
-                var conn = new XhrConn();
-                ConnManager(conn);
-                var idMessage = JSON.parse(conn.getMessages()[0]);
-                var id = idMessage.id;
-                conn.id = id;
-                conns[id] = conn;
-                ttls[id] = new Date().getTime() + ttl;
+                var conn = createConn();
+                var id = conn.id;
                 answer({ id: id });
             } else if (path.startsWith("/socket/")) {
                 var id = path.substring("/socket/".length);
                 var conn = conns[id];
                 ttls[id] = new Date().getTime() + ttl;
                 if (!conn) {
-                    answer({error: "connection with id "+id+" not found"});
+                    conn = createConn();
+                    answer({newId: conn.id});
                 } else if (request.method === "GET") {
                     var messages = conn.getMessages();
                     conn.resetMessages();
