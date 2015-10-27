@@ -1,6 +1,6 @@
 {
   "name": "rauricoste-websocket-room-server",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "",
   "main": "src/main/js/main.js",
   "scripts": {
