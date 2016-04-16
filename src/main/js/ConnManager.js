@@ -60,7 +60,7 @@ module.exports = function(conn) {
                         room: roomName,
                         members: toArray(room.clients)
                     });
-                    break;s
+                    break;
                 case "LEAVE":
                     var roomName = message.args[0];
                     console.log(client.id+" joined room "+roomName);
